@@ -3,7 +3,7 @@ xsrf = $.cookie("_xsrf");
 xsrflist = xsrf.split("|");
 _xsrf = Base64.decode(xsrflist[0]);
 function userlogin() {
-    var username = $("#username").val()
+    var username = $("#username").val();
     $.post("/login",{username:username,_xsrf:_xsrf},function(result){
         $('#msg').html(result.msg);
         if(result.code == 1){
@@ -12,9 +12,9 @@ function userlogin() {
     });
 }
 function adminlogin() {
-    var username = $("#username").val()
-    var password = $("#password").val()
-    var captcha = $("#captcha").val()
+    var username = $("#username").val();
+    var password = $("#password").val();
+    var captcha = $("#captcha").val();
     var captchas = $("input[name='captchas']")[0].value
     $.post("/ccms/c_login",{username:username,password:password,captcha:captcha,captchas:captchas,_xsrf:_xsrf},function(result){
         $('#msg').html(result.msg);
@@ -63,7 +63,7 @@ function fileget() {
     })
 }
 function sysset() {
-    var sitename = $("#sitename").val()
+    var sitename = $("#sitename").val();
     $.post("/ccms/sysset",{sitename:sitename,_xsrf:_xsrf},function(result){
         $('#msg').html(result.msg);
     });
@@ -73,13 +73,13 @@ function mysqlconn() {
     xsrf = $.cookie("_xsrf");
     xsrflist = xsrf.split("|");
     _xsrf = Base64.decode(xsrflist[0]);
-    var dbhost = $("#dbhost").val()
-    var dbuser = $("#dbuser").val()
-    var dbpas = $("#dbpas").val()
-    var dbname = $("#dbname").val()
-    var website = $("#website").val()
-    var username = $("#adminuser").val()
-    var password = $("#adminpas").val()
+    var dbhost = $("#dbhost").val();
+    var dbuser = $("#dbuser").val();
+    var dbpas = $("#dbpas").val();
+    var dbname = $("#dbname").val();
+    var website = $("#website").val();
+    var username = $("#adminuser").val();
+    var password = $("#adminpas").val();
     var salt = $("#salt").val()
     if(dbhost && dbuser && dbpas && dbname && website && username && password && salt){
         $.post("/install/conn",{dbhost:dbhost,dbuser:dbuser,dbpass:dbpas,dbname:dbname,website:website,username:username,password:password,salt:salt,_xsrf:_xsrf},function(result){
@@ -165,15 +165,32 @@ function cbind() {
     }
 }
 function userlogin() {
-    var username = $("#user").val()
-    var password = $("#pass").val()
-    var captcha = $("#captcha").val()
-    var captchas = $("input[name='captchas']")[0].value
-    $.post("/login",{username:username,password:password,captcha:captcha,captchas:captchas,_xsrf:_xsrf},function(result){
-        $('#msg').html(result.msg);
-        if(result.code == 1){
-            window.location.href = "/ccms/index";
-        }
-    });
+    var username = $("#user").val();
+    var password = $("#pass").val();
+    var captcha = $("#captcha").val();
+    var captchas = $("input[name='captchas']")[0].value;
+    if (username == "" || password =="" || captcha ==""){
+        $('#msg').html("输入内容不能为空！");
+    }else{
+        $.post("/login",{username:username,password:password,captcha:captcha,captchas:captchas,_xsrf:_xsrf},function(result){
+            $('#msg').html(result.msg);
+            if(result.code == 200){
+                var data = JSON.parse(result.data);
+                for (var key in data) {
+                    $("#data_table tbody").append('<tr><td>' + key + '</td><td>' + data[key] + '</td></tr>');
+                    console.log(key);     //获取key值
+                    console.log(data[key]); //获取对应的value值
+                }
+                $('#loginform').animate({
+                    height: 'toggle',
+                    opacity: 'toggle'
+                }, 'slow');
+                setInterval(function(){
+                    $('#datas').show("slow");
+                },1000);
+
+            }
+        });
+    }
 }
 //https://graph.qq.com/oauth2.0/authorize?client_id=101488968&response_type=code&redirect_uri={授权回调地址}&state={原样返回的参数}

@@ -1,12 +1,15 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/tealeg/xlsx"
-	"school/models"
 	"school/function"
+	"school/models"
+	"strconv"
+	"strings"
 )
 
 type Login struct {
@@ -20,6 +23,7 @@ type QQLogin struct {
 type Jsonre struct {
 	Code int `json:"code"`
 	Msg  string	`json:"msg"`
+	Data string `json:"data"`
 }
 func Newjson() *Jsonre {
 	return &Jsonre{}
@@ -51,6 +55,7 @@ func (c *Login) Post(){
 		o.Read(&set)
 		onlytitle := set.Onlytitle
 		passtitle := set.Passtitle
+		looktitle := set.Looktitle
 		if onlytitle == "" || passtitle == ""{
 			jsonre.Msg = "数据未初始化，请联系网站管理员！"
 		}else{
@@ -78,20 +83,21 @@ func (c *Login) Post(){
 						pasid = i				////取出唯密码索引对应的列数
 					}
 				}
-				fmt.Println(userbind.Line)
+				userdata := sheet.Rows[userbind.Line].Cells
+				//fmt.Println("已经绑定的行数：",userbind.Line)
 				if userbind.Line > 0{
 					linejc := sheet.Rows[userbind.Line].Cells[celid].Value
 					fmt.Println("已存在的绑定：",linejc)
 					if linejc == username{
 						pasjc = sheet.Rows[userbind.Line].Cells[pasid].Value
-						userdata := sheet.Rows[userbind.Line].Cells
-						fmt.Println(userdata)
+						userdata = sheet.Rows[userbind.Line].Cells
+						//fmt.Println(userdata)
 					}else{
 						fmt.Println("绑定关系出错开始查找并更新")
 						for k, row := range sheet.Rows { //遍历工作表中的行
 							if row.Cells[celid].Value == username{
 								pasjc = row.Cells[pasid].Value
-								userdata := row.Cells
+								userdata = row.Cells
 								userbind.Binduser = username
 								userbind.Line = k
 								o.Update(&userbind)
@@ -103,7 +109,7 @@ func (c *Login) Post(){
 					for k, row := range sheet.Rows { //遍历工作表中的行
 						if row.Cells[celid].Value == username{
 							pasjc = row.Cells[pasid].Value
-							userdata := row.Cells
+							userdata = row.Cells
 							userbind.Binduser = username
 							userbind.Line = k
 							o.Insert(&userbind)
@@ -111,14 +117,37 @@ func (c *Login) Post(){
 						}
 					}
 				}
+				//此处检查登陆成功逻辑
 				if password == pasjc{
+					max := len(titledata) - 1
+					var looktitles string
+					var lookdatas string
+					datas := make(map[string]string)
+					//fmt.Println("行数：",userbind.Line)
+					if looktitle != ""{
+						look := strings.Split(looktitle, ",")
+						for _,v := range look{
+							iv,_ := strconv.Atoi(v)
+							if iv <= max{
+								looktitles = looktitles + " " + titledata[iv].Value
+								lookdatas = lookdatas + " " + userdata[iv].Value
+								datas[titledata[iv].Value] = userdata[iv].Value
+							}else{
+								//fmt.Println("下标越界")
+							}
+						}
+					}
+					//fmt.Println(datas)
+					mjson,_ :=json.Marshal(datas)
+					mString :=string(mjson)
+					fmt.Println("对应JSON：",mString)
 					jsonre.Code = 200
-					jsonre.Msg = "登陆成功！"
+					jsonre.Msg = "登陆成功，请稍等。。。"
+					jsonre.Data = mString
 				}else{
 					jsonre.Msg = onlytitle + "或者登陆密码错误！"
 				}
-				fmt.Println(pasjc)
-				//此处检查成功逻辑
+				//此处检查登陆成功逻辑
 			}
 
 		}

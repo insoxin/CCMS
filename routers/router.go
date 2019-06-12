@@ -9,15 +9,15 @@ import (
 )
 
 func init() {
-	/*var FilterUser = func(ctx *context.Context) {
+	var FilterUser = func(ctx *context.Context) {
 		_, ok := ctx.Input.Session("suid").(int)
 		ok2 := strings.Contains(ctx.Request.RequestURI, "/ccms/c_login")
 		if !ok && !ok2 {
-			ctx.Redirect(302, "/login")
+			ctx.Redirect(302, "/")
 		}
 	}
 
-	beego.InsertFilter("/ccms/*",beego.BeforeRouter,FilterUser)*/
+	beego.InsertFilter("/ccms/*",beego.BeforeRouter,FilterUser)
 
 	var FilterLock = func(ctx *context.Context) {
 		ok := function.IsExist("./conf/config.ini")
@@ -56,7 +56,4 @@ func init() {
     beego.Router("/ccms/api/?:select",&controllers.Selects{},"*:Select")
 	beego.Router("/ccms/bind",&controllers.Bind{})
 	beego.Router("/ccms/bind/?:select",&controllers.Bind{},"*:Bind")
-	//beego.Router("/ccms/upload", &controllers.UploadController{})
-	beego.Router("/ccms/getsheet", &controllers.Getsheet{})
-	beego.Router("/ccms/getrow/?:rowid", &controllers.Getrow{})
 }

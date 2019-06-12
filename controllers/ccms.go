@@ -214,8 +214,8 @@ func (c *Importdata) Post(){
 		}
 		o := orm.NewOrm()
 		title := models.Dataset{}
-		o.Read(&title)
 		title.Id = 1
+		o.Read(&title)
 		title.Exceltitle = titlesql
 		_,err := o.Update(&title)
 		if err == nil{
