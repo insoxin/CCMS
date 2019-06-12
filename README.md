@@ -1,39 +1,33 @@
 # CCMS系统
 
 #### 介绍
-{**以下是码云平台说明，您可以替换此简介**
-码云是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+CCMS是一个开放数据查询的CMS工具，使用Glang+Beego开发
 
-#### 软件架构
-软件架构说明
 
+#### 环境要求
+    Linux/Windows
+
+    Mysql
+    
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+[Linux环境下Mysql安装教程](https://blog.csdn.net/andyzhaojianhui/article/details/82699309)
+
+[windows环境下可直接安装phpstydy集成环境](https://blog.csdn.net/xiaopingga/article/details/79493727)
+
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+如果您需要使用本程序，您可能会需要记住以下几点：
+   1. 本程序默认运行在8081端口，如修改程序运行端口请打开**conf/app.conf**文件修改**httpport = 8081** 字段并重启程序
+   2. 首次运行本程序，请运行服务端并访问程序于您服务器运行的端口进行安装
+   3. 运行本程序需要Mysql数据库支持，如果程序提示数据库连接失败，请确保您的数据库处于正常状态并可以进行连接
+   4. 如需要重新运行本程序，请删除**conf/config.ini**文件，并重启程序，重新进行安装
+   5. 本程序一般情况下您只需要修改运行端口，并保证服务器防火墙开放此端口
+   
+#### 参与贡献&授权说明
 
-#### 参与贡献
+*本程序由OldCat个人开发，未经授权允许，请勿修改程序代码，并不得用于任何商业性质的活动*
 
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+*如您对本程序有更好的建议请联系作者QQ：924417424*
