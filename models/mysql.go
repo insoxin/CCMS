@@ -39,7 +39,7 @@ type BindUid struct {
 }
 var sqlstatus = 0
 func init(){
-	orm.Debug = true
+	orm.Debug = false
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	//orm.RegisterDataBase("default","mysql","root:root@/testgo?charset=utf8",30)
 

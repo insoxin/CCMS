@@ -8,6 +8,7 @@ import (
 
 
 func main(){
+	beego.BConfig.RecoverPanic = true
 	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.Run()
 }
