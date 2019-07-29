@@ -2,9 +2,11 @@
 ![my-logo.png](./image/1.png "my-img")
 ![my-logo.png](./image/2.png "my-img")
 ![my-logo.png](./image/3.png "my-img")
+![my-logo.png](./image/7.png "my-img")
 ![my-logo.png](./image/4.png "my-img")
 ![my-logo.png](./image/5.png "my-img")
 ![my-logo.png](./image/6.png "my-img")
+![my-logo.png](./image/8.png "my-img")
 #### 介绍
 CCMS是一个开放数据查询的CMS工具，使用Glang+Beego开发
 #### 环境要求
